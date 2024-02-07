@@ -1,6 +1,6 @@
 package jonnyk.advent23;
 
-import jonnyk.util.RegexUtil;
+import jonnyk.util.AdventUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -21,15 +21,15 @@ public class Day01 {
 
     public void part1() {
         try {
-            Scanner scanner = getScanner();
+            Scanner scanner = AdventUtil.getScanner("01");
             Pattern firstDigit = Pattern.compile("^[^\\d]*(\\d)");
             Pattern lastDigit = Pattern.compile("(\\d)[^\\d]*$");
             Integer total = 0;
 
             while (scanner.hasNext()) {
                 String line = scanner.nextLine();
-                Integer lineValue = Integer.valueOf(RegexUtil.getFirstMatch(firstDigit, line) +
-                        RegexUtil.getFirstMatch(lastDigit, line));
+                Integer lineValue = Integer.valueOf(AdventUtil.getFirstMatch(firstDigit, line) +
+                        AdventUtil.getFirstMatch(lastDigit, line));
 
                 logger.info("Part1 Val={} Line={}", lineValue, line);
                 total += lineValue;
@@ -44,7 +44,7 @@ public class Day01 {
 
     public void part2() {
         try {
-            Scanner scanner = getScanner();
+            Scanner scanner = AdventUtil.getScanner("01");
             Pattern digitPattern = Pattern.compile("(?=(\\d|one|two|three|four|five|six|seven|eight|nine)).");
             Integer total = 0;
             Map<String, String> numMap = Map.of("one", "1", "two", "2", "three", "3", "four", "4",
@@ -52,8 +52,8 @@ public class Day01 {
 
             while (scanner.hasNext()) {
                 String line = scanner.nextLine();
-                Integer lineValue = Integer.valueOf(getNumString(numMap, RegexUtil.getFirstMatch(digitPattern, line)) +
-                        getNumString(numMap, RegexUtil.getLastMatch(digitPattern, line)));
+                Integer lineValue = Integer.valueOf(getNumString(numMap, AdventUtil.getFirstMatch(digitPattern, line)) +
+                        getNumString(numMap, AdventUtil.getLastMatch(digitPattern, line)));
 
                 logger.info("Part2 Val={} Line={}", lineValue, line);
                 total += lineValue;
@@ -69,11 +69,5 @@ public class Day01 {
     String getNumString(Map<String, String> map,
                         String value) {
         return map.getOrDefault(value, value);
-    }
-
-    public Scanner getScanner()
-            throws IOException {
-        File input = new File("/apps/adventofcode/2023/01_input.txt");
-        return new Scanner(input);
     }
 }
