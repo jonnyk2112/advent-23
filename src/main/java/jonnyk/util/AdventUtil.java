@@ -2,7 +2,9 @@ package jonnyk.util;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.Scanner;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -27,6 +29,17 @@ public class AdventUtil {
         Matcher matcher = pattern.matcher(value);
         matcher.find();
         return matcher.group(1);
+    }
+
+    public static Set<Integer> getIntSet(Pattern pattern,
+                                         String value) {
+        Matcher matcher = pattern.matcher(value);
+        Set<Integer> intSet = new HashSet<>();
+        while (matcher.find()) {
+            intSet.add(Integer.valueOf(matcher.group(1)));
+        }
+
+        return intSet;
     }
 
     public static String getLastMatch(Pattern pattern,
